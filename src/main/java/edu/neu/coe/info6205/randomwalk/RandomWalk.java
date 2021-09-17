@@ -4,6 +4,9 @@
 
 package edu.neu.coe.info6205.randomwalk;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class RandomWalk {
@@ -21,6 +24,8 @@ public class RandomWalk {
      */
     private void move(int dx, int dy) {
         // TO BE IMPLEMENTED
+        x += dx;
+        y += dy;
     }
 
     /**
@@ -30,6 +35,9 @@ public class RandomWalk {
      */
     private void randomWalk(int m) {
         // TO BE IMPLEMENTED
+        for(int step = 0; step < m; step++){
+            randomMove();
+        }
     }
 
     /**
@@ -49,7 +57,7 @@ public class RandomWalk {
      */
     public double distance() {
         // TO BE IMPLEMENTED
-        return 0;
+        return Math.sqrt(x * x + y * y);
     }
 
     /**
@@ -70,13 +78,27 @@ public class RandomWalk {
     }
 
     public static void main(String[] args) {
-        if (args.length == 0)
-            throw new RuntimeException("Syntax: RandomWalk steps [experiments]");
-        int m = Integer.parseInt(args[0]);
-        int n = 30;
-        if (args.length > 1) n = Integer.parseInt(args[1]);
-        double meanDistance = randomWalkMulti(m, n);
-        System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
+        try {
+            //Write the result into a file, and use python to do visualization later
+            BufferedWriter outfile = new BufferedWriter(
+                    new FileWriter(".\\src\\main\\java\\edu\\neu\\coe\\info6205\\randomwalk\\result.csv"));
+            System.out.println("==================Create file writer success!================\n");
+
+            int m = 1000;
+            // run m times for each n and take the average distance
+            for(int n = 1; n < 5000; n += 10) {
+                double meanDistance = randomWalkMulti(n, m);
+                System.out.println(n + " steps: distance = " + meanDistance + " over " + m + " experiments");
+
+                outfile.write(n + " " + meanDistance + "\n");
+            }
+            outfile.close();
+
+            System.out.println("\n==================Results have been written to a file!================");
+        }
+        catch (IOException e) {
+            System.out.println("==================Create file writer error!==================\n");
+        }
     }
 
 }
