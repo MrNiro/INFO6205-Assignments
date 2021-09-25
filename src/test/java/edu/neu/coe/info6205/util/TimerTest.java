@@ -50,13 +50,13 @@ public class TimerTest {
     @Test
     public void testPauseAndLapResume1() {
         final Timer timer = new Timer();
-        GoToSleep(TENTH, 0);
+        GoToSleep(TENTH * 2, 0);
         timer.pauseAndLap();
-        GoToSleep(TENTH, 0);
+        GoToSleep(TENTH * 2, 0);
         timer.resume();
-        GoToSleep(TENTH, 0);
+        GoToSleep(TENTH * 2, 0);
         final double time = timer.stop();
-        assertEquals(TENTH_DOUBLE, time, 10.0);
+        assertEquals(TENTH_DOUBLE * 2, time, 10.0);
         assertEquals(3, run);
     }
 
@@ -97,11 +97,11 @@ public class TimerTest {
     public void testRepeat1() {
         final Timer timer = new Timer();
         final double mean = timer.repeat(10, () -> {
-            GoToSleep(HUNDREDTH, 0);
+            GoToSleep(TENTH * 2, 0);
             return null;
         });
         assertEquals(10, new PrivateMethodTester(timer).invokePrivate("getLaps"));
-        assertEquals(TENTH_DOUBLE / 10, mean, 6);
+        assertEquals(TENTH_DOUBLE * 2, mean, 6);
         assertEquals(10, run);
         assertEquals(0, pre);
         assertEquals(0, post);
@@ -110,7 +110,7 @@ public class TimerTest {
     @Test
     public void testRepeat2() {
         final Timer timer = new Timer();
-        final int zzz = 20;
+        final int zzz = 200;
         final double mean = timer.repeat(10, () -> zzz, t -> {
             GoToSleep(t, 0);
             return null;
@@ -125,7 +125,7 @@ public class TimerTest {
     @Test // Slow
     public void testRepeat3() {
         final Timer timer = new Timer();
-        final int zzz = 20;
+        final int zzz = 200;
         final double mean = timer.repeat(10, () -> zzz, t -> {
             GoToSleep(t, 0);
             return null;
