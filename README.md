@@ -2,6 +2,10 @@
 
 This a repository for Assignments of Qinyun Lin in INFO6205
 
+## Asignment 5 - Parallel Sorting
+### path:
+    report & codes: src\main\java\edu\neu\coe\info6205\sort\par
+
 ## Asignment 3 - WQUPC
 ### path:
     report & codes: src\main\java\edu\neu\coe\info6205\union_find
